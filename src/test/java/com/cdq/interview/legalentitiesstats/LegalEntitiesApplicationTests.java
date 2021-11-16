@@ -1,4 +1,4 @@
-package com.cdq.interview.legalentities;
+package com.cdq.interview.legalentitiesstats;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.cdq.interview.legalentities;
+package com.cdq.interview.legalentitiesstats;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

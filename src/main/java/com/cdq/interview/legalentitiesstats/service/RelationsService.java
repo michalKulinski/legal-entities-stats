@@ -60,10 +60,8 @@ public class RelationsService {
 
     public List<Relation> getRelationsById(String nodeId) throws FileNotFoundException, XMLStreamException {
         relations = parser.xmlParser();
-
         List<Relation> relationList = relations.stream().filter(s -> s.getStartNode().getNodeId().equals(nodeId)
                 || s.getEndNode().getNodeId().equals(nodeId)).collect(Collectors.toList());
-        relationList.stream().forEach(s -> System.out.println(s));
 
         return relationList;
     }

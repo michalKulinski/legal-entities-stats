@@ -27,58 +27,64 @@ public class Parser {
     boolean isNodeID = false;
     boolean isEndNode = false;
 
-    public List<Relation> xmlParser() throws FileNotFoundException, XMLStreamException {
+    final String pathName = System.getProperty("user.dir") + "/data";
 
-        File[] files = new File(System.getProperty("user.dir") + "/data").listFiles();
+    public List<Relation> xmlParser() throws FileNotFoundException, XMLStreamException {
 
         List<Relation> relationList = new ArrayList<>();
 
-        for (File file : files) {
+        if (new File(pathName).exists()) {
+            List<File> files = List.of(new File(pathName).listFiles());
 
-            XMLInputFactory factory = XMLInputFactory.newInstance();
-            XMLStreamReader streamReader = factory.createXMLStreamReader(new FileReader(file));
+            for (File file : files) {
+                XMLInputFactory factory = XMLInputFactory.newInstance();
+                XMLStreamReader streamReader = factory.createXMLStreamReader(new FileReader(file));
 
-            while (streamReader.hasNext()) {
-                streamReader.next();
-                int event = streamReader.getEventType();
-                switch (event) {
-                    case XMLStreamReader.START_ELEMENT:
-                        if (streamReader.getLocalName().equals("Relationship")) {
-                            relation = new Relation();
-                        } else if (streamReader.getLocalName().equals("StartNode")) {
-                            startNode = new StartNode();
-                            isStartNode = true;
-                        } else if (streamReader.getLocalName().equals("EndNode")) {
-                            endNode = new EndNode();
-                            isEndNode = true;
-                        } else if (streamReader.getLocalName().equals("NodeID")) {
-                            isNodeID = true;
-                        } else if (streamReader.getLocalName().equalsIgnoreCase("RelationshipType")) {
-                            relation.setRelationType(streamReader.getElementText());
-                        }
-                        break;
-                    case XMLStreamReader.CHARACTERS:
-                        if (isStartNode && isNodeID) {
-                            startNode.setNodeId(streamReader.getText());
-                            relation.setStartNode(startNode);
-                            isStartNode = false;
-                            isNodeID = false;
-                        } else if (isEndNode && isNodeID) {
-                            endNode.setNodeId(streamReader.getText());
-                            relation.setEndNode(endNode);
-                            isEndNode = false;
-                            isNodeID = false;
-                        }
-                        break;
-                    case XMLStreamReader.END_ELEMENT:
-                        if (streamReader.getLocalName().equals("Relationship")) {
-                            relationList.add(relation);
-                        }
-                        break;
+                while (streamReader.hasNext()) {
+                    streamReader.next();
+                    int event = streamReader.getEventType();
+                    switch (event) {
+                        case XMLStreamReader.START_ELEMENT:
+                            if (streamReader.getLocalName().equals("Relationship")) {
+                                relation = new Relation();
+                            } else if (streamReader.getLocalName().equals("StartNode")) {
+                                startNode = new StartNode();
+                                isStartNode = true;
+                            } else if (streamReader.getLocalName().equals("EndNode")) {
+                                endNode = new EndNode();
+                                isEndNode = true;
+                            } else if (streamReader.getLocalName().equals("NodeID")) {
+                                isNodeID = true;
+                            } else if (streamReader.getLocalName().equalsIgnoreCase("RelationshipType")) {
+                                relation.setRelationType(streamReader.getElementText());
+                            }
+                            break;
+                        case XMLStreamReader.CHARACTERS:
+                            if (isStartNode && isNodeID) {
+                                startNode.setNodeId(streamReader.getText());
+                                relation.setStartNode(startNode);
+                                isStartNode = false;
+                                isNodeID = false;
+                            } else if (isEndNode && isNodeID) {
+                                endNode.setNodeId(streamReader.getText());
+                                relation.setEndNode(endNode);
+                                isEndNode = false;
+                                isNodeID = false;
+                            }
+                            break;
+                        case XMLStreamReader.END_ELEMENT:
+                            if (streamReader.getLocalName().equals("Relationship")) {
+                                relationList.add(relation);
+                            }
+                            break;
+                    }
                 }
             }
+        } else {
+            throw new FileNotFoundException("Data file not found. Please ensure you have downloaded the data package");
         }
         log.debug("List of relations: " + relationList);
+
         return relationList;
 
     }

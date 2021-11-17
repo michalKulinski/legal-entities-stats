@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cdq.interview</groupId>
 	<artifactId>legal-entities</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>legal-entities</name>
 	<description>App to get statistics for legal-entities</description>
 	<properties>

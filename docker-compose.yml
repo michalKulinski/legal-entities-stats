@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  springboot-docker-compose-app-container:
+    image: legal-entities-stats:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /docker/legal-entities-stats
+    ports:
+      - "8080:8080"

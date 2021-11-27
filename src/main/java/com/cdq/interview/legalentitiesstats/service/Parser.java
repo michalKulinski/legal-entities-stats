@@ -15,6 +15,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.xml.stream.XMLStreamConstants.*;
+
 @Slf4j
 @Service
 public class Parser {

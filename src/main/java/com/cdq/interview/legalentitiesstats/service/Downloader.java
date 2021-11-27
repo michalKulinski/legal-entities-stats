@@ -13,13 +13,13 @@ import java.net.URL;
 @Service
 public class Downloader {
 
-    final String path = System.getProperty("user.dir") + "/data.zip";
+    final String PATH = System.getProperty("user.dir") + "/data.zip";
 
     public boolean downloadFile(String url) {
 
-        if (!new File(path).isFile()) {
+        if (!new File(PATH).isFile()) {
             try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-                 FileOutputStream fileOutputStream = new FileOutputStream(path)) {
+                 FileOutputStream fileOutputStream = new FileOutputStream(PATH)) {
                 byte[] dataBuffer = new byte[1024];
                 int bytesRead;
                 log.info("Download starting");

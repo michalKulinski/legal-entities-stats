@@ -5,6 +5,8 @@ import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Slf4j
 @Service
 public class ZipExtractor {
@@ -12,7 +14,7 @@ public class ZipExtractor {
     final String source = System.getProperty("user.dir") + "/data.zip";
     final String target = System.getProperty("user.dir") + "/data";
 
-    public void extract() {
+    public void extract() throws IOException {
 
         try (ZipFile zipFile = new ZipFile(source)){
             zipFile.extractAll(target);

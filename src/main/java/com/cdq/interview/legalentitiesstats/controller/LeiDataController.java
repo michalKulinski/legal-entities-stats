@@ -20,9 +20,4 @@ public class LeiDataController {
     public void downloadData(@RequestBody LeiData leiData) {
         leiDataService.prepareData(leiData.getUrl());
     }
-
-    @DeleteMapping("/deleteData")
-    public void deleteData() {
-        leiDataService.deleteData();
-    }
 }

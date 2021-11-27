@@ -1,8 +1,12 @@
 package com.cdq.interview.legalentitiesstats.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
+@Slf4j
 @Service
 public class LeiDataService {
 
@@ -19,7 +23,11 @@ public class LeiDataService {
         boolean isDownloaded = downloader.downloadFile(url);
 
         if(isDownloaded){
-            zipExtractor.extract();
+            try {
+                zipExtractor.extract();
+            } catch (IOException e) {
+                log.error("Cannot extract zip file: " + e);
+            }
         }
     }
 }

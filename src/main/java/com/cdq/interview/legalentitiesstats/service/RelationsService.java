@@ -51,7 +51,7 @@ public class RelationsService {
     public Double getAverageNumber() throws FileNotFoundException, XMLStreamException {
         relations = parser.xmlParser();
         Map<String, Long> nodesMap = getAllCountedNodes(relations);
-        Double average = nodesMap.entrySet().stream().mapToDouble(a -> a.getValue()).average().orElse(0.0);
+        Double average = nodesMap.entrySet().stream().mapToDouble(Map.Entry::getValue).average().orElse(0.0);
 
         log.debug("Average number of relations: " + average);
 
@@ -60,10 +60,8 @@ public class RelationsService {
 
     public List<Relation> getRelationsById(String nodeId) throws FileNotFoundException, XMLStreamException {
         relations = parser.xmlParser();
-        List<Relation> relationList = relations.stream().filter(s -> s.getStartNode().getNodeId().equals(nodeId)
+        return relations.stream().filter(s -> s.getStartNode().getNodeId().equals(nodeId)
                 || s.getEndNode().getNodeId().equals(nodeId)).collect(Collectors.toList());
-
-        return relationList;
     }
 
     private Map<String, Long> getAllCountedNodes(List<Relation> relationsList) {

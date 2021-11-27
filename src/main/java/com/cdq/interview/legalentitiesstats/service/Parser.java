@@ -38,13 +38,14 @@ public class Parser {
 
             for (File file : files) {
                 XMLInputFactory factory = XMLInputFactory.newInstance();
+                factory.setProperty(XMLInputFactory.IS_SUPPORTING_EXTERNAL_ENTITIES, Boolean.FALSE);
                 XMLStreamReader streamReader = factory.createXMLStreamReader(new FileReader(file));
 
                 while (streamReader.hasNext()) {
                     streamReader.next();
                     int event = streamReader.getEventType();
                     switch (event) {
-                        case XMLStreamReader.START_ELEMENT:
+                        case START_ELEMENT:
                             if (streamReader.getLocalName().equals("Relationship")) {
                                 relation = new Relation();
                             } else if (streamReader.getLocalName().equals("StartNode")) {
@@ -59,7 +60,7 @@ public class Parser {
                                 relation.setRelationType(streamReader.getElementText());
                             }
                             break;
-                        case XMLStreamReader.CHARACTERS:
+                        case CHARACTERS:
                             if (isStartNode && isNodeID) {
                                 startNode.setNodeId(streamReader.getText());
                                 relation.setStartNode(startNode);
@@ -72,7 +73,7 @@ public class Parser {
                                 isNodeID = false;
                             }
                             break;
-                        case XMLStreamReader.END_ELEMENT:
+                        case END_ELEMENT:
                             if (streamReader.getLocalName().equals("Relationship")) {
                                 relationList.add(relation);
                             }

@@ -14,8 +14,7 @@ public class ZipExtractor {
 
     public void extract() {
 
-        try {
-            ZipFile zipFile = new ZipFile(source);
+        try (ZipFile zipFile = new ZipFile(source)){
             zipFile.extractAll(target);
             log.info("Data extracted successfully");
         } catch (ZipException e) {

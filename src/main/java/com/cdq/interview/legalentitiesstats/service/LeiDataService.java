@@ -22,9 +22,4 @@ public class LeiDataService {
             zipExtractor.extract();
         }
     }
-
-    public void deleteData(){
-
-    }
-
 }
